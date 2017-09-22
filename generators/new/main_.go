@@ -7,17 +7,19 @@ package new
 
 import (
 	"io/ioutil"
+	"log"
 	"path/filepath"
 
 	"github.com/cumulusware/grab/helpers"
 )
 
-func createMain(appPath, appName string) {
-	_, importPath, err := helpers.DetermineImportPath(appPath)
+func createMain(appPath, appName string) error {
+	log.Println("Entered createMain")
+	importPath, err := helpers.DetermineImportPath(appPath)
 	if err != nil {
-		// FIXME(mdr): Need to do something more than just panic.
-		panic(err)
+		return err
 	}
+	log.Printf("importPath = %s", importPath)
 
 	data := []byte(`package main
 
@@ -33,6 +35,8 @@ func main() {
 	n.UseHandler(router)
 	http.ListenAndServe(":5000", n)
 }`)
-	mainGoFile := filepath.Join(appPath, "main.go")
-	ioutil.WriteFile(mainGoFile, data, filePerm)
+	log.Println("here")
+	filename := filepath.Join(appPath, "main.go")
+	log.Printf("%s", filename)
+	return ioutil.WriteFile(filename, data, filePerm)
 }

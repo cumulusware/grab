@@ -7,6 +7,7 @@ package helpers
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"path"
 	"path/filepath"
@@ -29,24 +30,24 @@ func MkdirAll(perm os.FileMode, x ...string) error {
 	return err
 }
 
-// DetermineImportPath returns both the Go src directory and the import path.
-// FIXME: Should split this into two functions for the SRP.
-func DetermineImportPath(givenPath string) (goSrc, importPath string, err error) {
+// DetermineGoSrcPath returns the Go src directory.
+func DetermineGoSrcPath(givenPath string) (importPath string, err error) {
+	log.Printf("DetermineImportPath of %s", givenPath)
 	var basePath string
 
 	parentPath, err := filepath.Abs(filepath.Clean(givenPath))
 	if err != nil {
-		return "", "", err
+		return "", err
 	}
 
 	if parentPath == "." {
 		err := fmt.Errorf("Given path %s appears to be empty string", givenPath)
-		return "", "", err
+		return "", err
 	}
 
 	if parentPath == "/" {
 		err := fmt.Errorf("Given path %s appears to be root directory", givenPath)
-		return "", "", err
+		return "", err
 	}
 
 	for parentPath != "." {
@@ -54,12 +55,45 @@ func DetermineImportPath(givenPath string) (goSrc, importPath string, err error)
 		parentPath = filepath.Dir(parentPath)
 
 		if basePath == "src" {
-			goSrc = filepath.Join(parentPath, basePath)
-			return goSrc, importPath, nil
+			goSrc := filepath.Join(parentPath, basePath)
+			return goSrc, nil
+		}
+	}
+
+	err = fmt.Errorf("Unable to find Go src path for %s", givenPath)
+	return "", err
+}
+
+// DetermineImportPath returns both the Go src directory and the import path.
+func DetermineImportPath(givenPath string) (importPath string, err error) {
+	log.Printf("DetermineImportPath of %s", givenPath)
+	var basePath string
+
+	parentPath, err := filepath.Abs(filepath.Clean(givenPath))
+	if err != nil {
+		return "", err
+	}
+
+	if parentPath == "." {
+		err := fmt.Errorf("Given path %s appears to be empty string", givenPath)
+		return "", err
+	}
+
+	if parentPath == "/" {
+		err := fmt.Errorf("Given path %s appears to be root directory", givenPath)
+		return "", err
+	}
+
+	for parentPath != "." {
+		basePath = filepath.Base(parentPath)
+		parentPath = filepath.Dir(parentPath)
+
+		if basePath == "src" {
+			return importPath, nil
 		}
 		importPath = filepath.Join(basePath, importPath)
 	}
 
 	err = fmt.Errorf("Unable to find Go src path for %s", givenPath)
-	return "", "", err
+	return "", err
 }

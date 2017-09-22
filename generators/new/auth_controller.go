@@ -13,7 +13,7 @@ import (
 )
 
 func createAuthController(appPath string) {
-	_, importPath, err := helpers.DetermineImportPath(appPath)
+	importPath, err := helpers.DetermineImportPath(appPath)
 	if err != nil {
 		// FIXME(mdr): Need to do something more than just panic.
 		panic(err)

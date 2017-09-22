@@ -22,7 +22,10 @@ func CreateApp(appPath string) {
 	mkdirAll(appPath, "services")
 	mkdirAll(appPath, "core", "authentication")
 	mkdirAll(appPath, "api", "parameters")
-	createMain(appPath, appName)
+	err := createMain(appPath, appName)
+	if err != nil {
+		log.Fatalf("Error creating main.go: %s", err)
+	}
 	createAuthRoutes(appPath)
 	createAuthController(appPath)
 	createAuthMiddlewares(appPath)
