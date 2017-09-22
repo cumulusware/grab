@@ -16,9 +16,10 @@ import (
 // newCmd represents the new command
 var newCmd = &cobra.Command{
 	Use:   "new",
-	Short: "Create directory <app-name> and initialize as REST API",
-	Long:  `Grab is a CLI tool to generate a REST API.`,
-	Run:   newApp,
+	Short: "Initialize new REST API in <app-name>",
+	Long: `Create a new directory named <app-name> and initialize a new
+REST API project`,
+	Run: newApp,
 }
 
 func newApp(cmd *cobra.Command, args []string) {

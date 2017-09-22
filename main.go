@@ -5,7 +5,7 @@
 
 package main
 
-import "grab/cmd"
+import "github.com/cumulusware/grab/cmd"
 
 func main() {
 	cmd.Execute()
