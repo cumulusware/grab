@@ -1,7 +1,6 @@
 package newapp
 
 import (
-	"fmt"
 	"io/ioutil"
 	"path/filepath"
 )
@@ -29,6 +28,5 @@ func DescribeAPI(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }`)
 	filename := filepath.Join(appPath, "api_base.go")
-	fmt.Println("I'm here")
 	ioutil.WriteFile(filename, data, filePerm)
 }

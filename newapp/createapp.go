@@ -1,6 +1,7 @@
 package newapp
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -13,13 +14,23 @@ const filePerm os.FileMode = 0644
 
 func CreateApp(appPath string) {
 	appName := filepath.Base(appPath)
-	mkdirAll(appPath, "docs")
-	mkdirAll(appPath, "public")
+	fmt.Printf("Creating %s app\n", appName)
+	mkdirAll(appPath, "routers")
+	mkdirAll(appPath, "controllers")
+	mkdirAll(appPath, "models")
+	mkdirAll(appPath, "services")
+	mkdirAll(appPath, "core", "authentication")
+	mkdirAll(appPath, "api", "parameters")
 	createMain(appPath, appName)
-	createRouter(appPath)
-	createRoutes(appPath)
-	createAPIBase(appPath)
-
+	createAuthRoutes(appPath)
+	createAuthController(appPath)
+	createAuthMiddlewares(appPath)
+	createAuthService(appPath)
+	createAuthParameters(appPath)
+	createHelloRoutes(appPath)
+	createHelloController(appPath)
+	createUserModel(appPath)
+	createCoreAuthJWTBackend(appPath)
 }
 
 func mkdirAll(x ...string) {
