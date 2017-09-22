@@ -1,4 +1,4 @@
-package newapp
+package new
 
 import (
 	"io/ioutil"

@@ -1,4 +1,4 @@
-package newapp
+package new
 
 import (
 	"fmt"
@@ -12,6 +12,7 @@ import (
 const dirPerm os.FileMode = 0755
 const filePerm os.FileMode = 0644
 
+// CreateApp creates a grab app in the given directory.
 func CreateApp(appPath string) {
 	appName := filepath.Base(appPath)
 	fmt.Printf("Creating %s app\n", appName)

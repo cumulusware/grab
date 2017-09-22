@@ -12,6 +12,7 @@ import (
 	"path/filepath"
 )
 
+// Mkdir creates a directory joining the given directories
 func Mkdir(perm os.FileMode, x ...string) error {
 	path := path.Join(x...)
 
@@ -19,6 +20,8 @@ func Mkdir(perm os.FileMode, x ...string) error {
 	return err
 }
 
+// MkdirAll creates a directory including intermediate directories joining the
+// given directories.
 func MkdirAll(perm os.FileMode, x ...string) error {
 	path := path.Join(x...)
 
@@ -26,6 +29,8 @@ func MkdirAll(perm os.FileMode, x ...string) error {
 	return err
 }
 
+// DetermineImportPath returns both the Go src directory and the import path.
+// FIXME: Should split this into two functions for the SRP.
 func DetermineImportPath(givenPath string) (goSrc, importPath string, err error) {
 	var basePath string
 
@@ -51,9 +56,8 @@ func DetermineImportPath(givenPath string) (goSrc, importPath string, err error)
 		if basePath == "src" {
 			goSrc = filepath.Join(parentPath, basePath)
 			return goSrc, importPath, nil
-		} else {
-			importPath = filepath.Join(basePath, importPath)
 		}
+		importPath = filepath.Join(basePath, importPath)
 	}
 
 	err = fmt.Errorf("Unable to find Go src path for %s", givenPath)

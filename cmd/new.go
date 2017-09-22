@@ -9,7 +9,7 @@ import (
 	"log"
 	"path/filepath"
 
-	"github.com/cumulusware/grab/newapp"
+	newapp "github.com/cumulusware/grab/generators/new"
 	"github.com/spf13/cobra"
 )
 
