@@ -15,8 +15,8 @@ import (
 var rootCmd = &cobra.Command{
 	Use:     "grab",
 	Version: "0.1.0",
-	Short:   "grab is the Go REST API Builder",
-	Long:    `Grab is used to build a Go-based REST API.`,
+	Short:   "GRAB is the Go REST API Builder",
+	Long:    `GRAB is the Go REST API Builder.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		cmd.Help()
 	},
