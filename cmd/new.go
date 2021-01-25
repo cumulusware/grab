@@ -7,7 +7,6 @@ package cmd
 
 import (
 	"log"
-	"path/filepath"
 
 	"github.com/cumulusware/grab/internal/newapp"
 	"github.com/spf13/cobra"
@@ -18,20 +17,12 @@ func init() {
 }
 
 var newCmd = &cobra.Command{
-	Use:   "new <app-name>",
-	Short: "Create directory <app-name> and initialize as REST API",
+	Use:   "new",
+	Short: "Create new REST API app",
 	Run: func(cmd *cobra.Command, args []string) {
-		if len(args) < 1 {
-			cmd.Usage()
-			log.Fatalln("Path for new site needs to be provided")
-		}
-
-		appPath, err := filepath.Abs(filepath.Clean(args[0]))
+		err := newapp.CreateApp()
 		if err != nil {
-			cmd.Usage()
-			log.Fatalln(err)
+			log.Fatal(err)
 		}
-
-		newapp.CreateApp(appPath)
 	},
 }
